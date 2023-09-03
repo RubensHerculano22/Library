@@ -1,4 +1,5 @@
-﻿using Library.Model;
+﻿using Library.Business;
+using Library.Model;
 using Library.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -14,47 +15,47 @@ namespace Library.Controllers
     public class BookController : ControllerBase
     {
         private readonly ILogger<BookController> _logger;
-        private IBookService _bookService;
+        private IBookBusiness _bookBusiness;
 
-        public BookController(ILogger<BookController> logger, IBookService BookService)
+        public BookController(ILogger<BookController> logger, IBookBusiness bookBusiness)
         {
             _logger = logger;
-            _bookService = BookService;
+            _bookBusiness = bookBusiness;
         }
 
         [HttpGet]
         public IActionResult Get()
         {
 
-            return Ok(_bookService.FindAll());
+            return Ok(_bookBusiness.FindAll());
         }
 
         [HttpGet("{id}")]
         public IActionResult Get(long id)
         {
-            var Book = _bookService.FindById(id);
-            if (Book == null) return NotFound();
-            return Ok(Book);
+            var person = _bookBusiness.FindById(id);
+            if (person == null) return NotFound();
+            return Ok(person);
         }
 
         [HttpPost]
         public IActionResult Post([FromBody] Book book)
         {
             if (book == null) return BadRequest();
-            return Ok(_bookService.Create(book));
+            return Ok(_bookBusiness.Create(book));
         }
 
         [HttpPut]
         public IActionResult Put([FromBody] Book book)
         {
             if (book == null) return BadRequest();
-            return Ok(_bookService.Update(book));
+            return Ok(_bookBusiness.Update(book));
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(long id)
         {
-            _bookService.Delete(id);
+            _bookBusiness.Delete(id);
             return NoContent();
         }
     }

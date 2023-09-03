@@ -1,4 +1,5 @@
 ﻿using Library.Model;
+using Library.Model.Context;
 using Library.Repository;
 using System;
 using System.Collections.Generic;
@@ -6,13 +7,13 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Library.Services.Implementations
+namespace Library.Business.Implementations
 {
-    public class BookServiceImplementation : IBookService
+    public class BookBusinessImplementation : IBookBusiness
     {
         private readonly IBookRepository _repository;
 
-        public BookServiceImplementation(IBookRepository repository)
+        public BookBusinessImplementation(IBookRepository repository)
         {
             _repository = repository;
         }
