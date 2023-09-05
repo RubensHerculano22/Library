@@ -3,7 +3,7 @@ using Library.Business.Implementations;
 using Library.Configurations;
 using Library.Model.Context;
 using Library.Repository;
-using Library.Repository.Implementations;
+using Library.Repository.Generic;
 using Library.Services;
 using Library.Services.Implementations;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -91,7 +91,7 @@ namespace Library
 
             //Dependency Injection
             services.AddScoped<IBookBusiness, BookBusinessImplementation>();
-            services.AddScoped<IBookRepository, BookRepositoryImplementation>();
+            services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Library", Version = "v1" });

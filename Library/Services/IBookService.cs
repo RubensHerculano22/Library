@@ -8,13 +8,13 @@ namespace Library.Services
 {
     public interface IBookService
     {
-        Book Create(Book book);
+        BookVO Create(BookVO book);
 
-        Book FindById(long id);
+        BookVO FindById(long id);
 
-        List<Book> FindAll();
+        List<BookVO> FindAll();
 
-        Book Update(Book book);
+        BookVO Update(BookVO book);
 
         void Delete(long id);
     }

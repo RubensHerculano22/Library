@@ -1,5 +1,6 @@
 ﻿using Library.Data.Converter.Implementations;
 using Library.Model;
+using Library.Model.Context;
 using Library.Repository;
 using System;
 using System.Collections.Generic;
@@ -7,15 +8,15 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Library.Services.Implementations
+namespace Library.Business.Implementations
 {
-    public class BookServiceImplementation : IBookService
+    public class BookBusinessImplementation : IBookBusiness
     {
         private readonly IRepository<Book> _repository;
 
         private readonly BookConverter _converter;
 
-        public BookServiceImplementation(IRepository<Book> repository)
+        public BookBusinessImplementation(IRepository<Book> repository)
         {
             _repository = repository;
             _converter = new BookConverter();

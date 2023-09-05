@@ -15,14 +15,14 @@ namespace Library.Model
         [Column("description")]
         public string Description { get; set; }
         [Column("registerDate")]
-        public string RegisterDate { get; set; }
+        public DateTime RegisterDate { get; set; }
         [Column("alterDate")]
-        public string AlterDate { get; set; }
+        public DateTime AlterDate { get; set; }
         [Column("idCategory")]
-        public string IdCategory { get; set; }
+        public int IdCategory { get; set; }
         [Column("author")]
         public string Author { get; set; }
         [Column("publishDate")]
-        public string PublishDate { get; set; }
+        public DateTime PublishDate { get; set; }
     }
 }
