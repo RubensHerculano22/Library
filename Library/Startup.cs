@@ -90,7 +90,16 @@ namespace Library
             services.AddDbContext<MySQLContext>(options => options.UseMySql(connection));
 
             //Dependency Injection
+
+            if (Environment.IsDevelopment())
+            {
+                MigrateDatabase(connection);
+            }
+
             services.AddScoped<IBookBusiness, BookBusinessImplementation>();
+            services.AddScoped<ICategoryBusiness, CategoryBusinessImplementation>();
+            services.AddScoped<IRentBusiness, RentBusinessImplementation>();
+            services.AddScoped<IUserBusiness, UserBusinessImplementation>();
             services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
             services.AddSwaggerGen(c =>
             {
@@ -117,7 +126,27 @@ namespace Library
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapControllerRoute("DefaultApi", "{controller=values}/{id?}");
             });
+        }
+
+        private void MigrateDatabase(string connection)
+        {
+            try
+            {
+                var evolveConnection = new MySql.Data.MySqlClient.MySqlConnection(connection);
+                var evolve = new Evolve.Evolve(evolveConnection, msg => Log.Information(msg))
+                {
+                    Locations = new List<string> { "db/migrations", "db/dataset" },
+                    IsEraseDisabled = true,
+                };
+                evolve.Migrate();
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Database migration failed", ex);
+                throw;
+            }
         }
     }
 }
